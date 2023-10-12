@@ -15,7 +15,7 @@ jobs:
             matrix:
                 python-version: [3.11]
         env:
-            MODE: "dev"
+            MODE: ${{secrets.MODE}}
         steps:
             - uses: actions/checkout@v3
 
