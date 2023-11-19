@@ -5,17 +5,26 @@ pipeline {
 
       stage("build"){
           steps {
-            echo 'building the application'
+            echo 'Install dependencies'
+              sh """
+              pip install -r requirements.txt
+              """
         }
       }
       stage("test"){
           steps {
-             echo 'test the application hello' 
+             echo 'Run the tests' 
+              sh """
+              python app/main_test.py
+              """
         }
       }
-      stage("deploy"){
+      stage("run"){
           steps {
-            echo 'deploy the application'
+            echo 'Run the app'
+              sh """
+              python app/main.py
+              """
         }
       }
     }
