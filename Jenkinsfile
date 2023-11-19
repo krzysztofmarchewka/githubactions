@@ -2,17 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage("Checkout"){
-            steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/master']], 
-                          extensions: [], 
-                          userRemoteConfigs: [[ url: 'https://github.com/krzysztofmarchewka/SimpleTestCI.git']]
-                         ])
-            }
+      stage("Checkout"){
+          steps {
+              checkout([$class: 'GitSCM', 
+                        branches: [[name: '*/master']], 
+                        extensions: [], 
+                        userRemoteConfigs: [[ url: 'https://github.com/krzysztofmarchewka/SimpleTestCI.git']]
+                        ])
+          }
         }
-
-        stage("Version"){
+      stage("Version"){
           steps {
             echo 'Install dependencies'
               sh """
@@ -44,7 +43,5 @@ pipeline {
         }
       }
     }
-  
+  }
 }
-
-
