@@ -14,7 +14,6 @@ pipeline {
     stage("build"){
       agent {
           docker {
-            echo 'Install Python from docker'
             image 'python:3.12.0-alpine3.18'
           }
             }
@@ -28,7 +27,6 @@ pipeline {
     stage("test"){
       agent {
           docker {
-            echo 'Use Python in docker for tests'
             image 'python:3.12.0-alpine3.18'
           }
             }
