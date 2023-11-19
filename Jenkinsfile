@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-      stage("Checkout"){
+      stage("checkout"){
           steps {
               checkout([$class: 'GitSCM', 
                         branches: [[name: '*/master']], 
@@ -11,9 +11,17 @@ pipeline {
                         ])
           }
         }
-      stage("Version"){
+    stage("install"){
           steps {
-            echo 'Install dependencies'
+            echo 'Install Python'
+              sh """
+              apt install python
+              """
+        }
+      } 
+      stage("version"){
+          steps {
+            echo 'Check Python version'
               sh """
               python --version
               """
@@ -21,7 +29,7 @@ pipeline {
       }
       stage("build"){
           steps {
-            echo 'Install dependencies'
+            echo 'Install requirements'
               sh """
               pip install -r requirements.txt
               """
