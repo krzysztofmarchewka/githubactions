@@ -11,44 +11,30 @@ pipeline {
                         ])
           }
         }
-    stage("install"){
-          steps {
-            echo 'Install Python'
-              sh """
-              apt install python
-              """
+    stage("build"){
+      agent {
+          docker {
+            echo 'Install Python from docker'
+            image 'python:3.12.0-alpine3.18'
+          }
+            }
+      steps {
+          echo 'Check python version'
+          sh 'python --version'
+          echo 'Install requirements'
+          sh 'pip install -r requirements.txt'  
         }
-      } 
-      stage("version"){
-          steps {
-            echo 'Check Python version'
-              sh """
-              python --version
-              """
-        }
-      }
-      stage("build"){
-          steps {
-            echo 'Install requirements'
-              sh """
-              pip install -r requirements.txt
-              """
-        }
-      }
-      stage("test"){
-          steps {
-             echo 'Run the tests' 
-              sh """
-              python app/main_test.py
-              """
-        }
-      }
-      stage("run"){
-          steps {
-            echo 'Run the app'
-              sh """
-              python app/main.py
-              """
+    }
+    stage("test"){
+      agent {
+          docker {
+            echo 'Use Python in docker for tests'
+            image 'python:3.12.0-alpine3.18'
+          }
+            }
+      steps {
+          echo 'Run the tests' 
+          sh 'python app/main_test.py'
         }
       }
     }
