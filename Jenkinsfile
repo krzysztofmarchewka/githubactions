@@ -18,6 +18,7 @@ pipeline {
               python --version
               """
         }
+      }
       stage("build"){
           steps {
             echo 'Install dependencies'
@@ -44,4 +45,3 @@ pipeline {
       }
     }
   }
-}
